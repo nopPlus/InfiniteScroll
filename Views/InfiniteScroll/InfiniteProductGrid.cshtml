@@ -1,0 +1,22 @@
+﻿@model List<ProductOverviewModel>
+@using System.Collections.Generic
+@using Arsina.WebShop.Web.Models.Catalog
+@foreach (var product in Model)
+{
+    <li class="item-box infinite-box col-6 col-md-4 col-lg-3">
+        @Html.Partial("_ProductBox", product)
+    </li>
+}
+@if (ViewBag.NextPage != null && ViewBag.NextPage > 0)
+{
+    int categoryId = ViewBag.CategoryId;
+    int orderBy = ViewBag.OrderBy != null ? ViewBag.OrderBy : 0;
+    int pageSize = ViewBag.PageSize;
+    int nextPage = ViewBag.NextPage;
+
+    <p class="pagination">
+        @*<a class="pagination__next" href="/InfiniteScroll/LoadProducts?categoryId=@categoryId&orderBy=@orderBy&pageSize=@pageSize&page=@nextPage">Next page</a>*@
+
+        <a class="pagination__next" data-categoryid="@categoryId" data-orderby="@orderBy" data-pagesize="@pageSize" data-pagenumber="@nextPage"></a>
+    </p>
+}

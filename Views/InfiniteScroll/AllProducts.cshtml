@@ -1,0 +1,94 @@
+﻿
+@using Arsina.WebShop.Web.Framework.UI
+@{
+    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
+    //title
+    Html.AddTitleParts(T("Plugin.Misc.InfiniteScroll.PageTitle").Text);
+    //meta
+    //Html.AddMetaDescriptionParts(Model.MetaDescription);
+    //Html.AddMetaKeywordParts(Model.MetaKeywords);
+    //page class
+    Html.AppendPageCssClassParts("html-category-page");
+
+    Html.AddCssFileParts("~/Plugins/Misc.InfiniteScroll/Content/infinitescroll.min.css");
+    Html.AddScriptParts("~/Plugins/Misc.InfiniteScroll/Content/infinite-scroll.pkgd.min.js");
+}
+
+<div class="page category-page">
+    <header>
+        <h1 class="page-title"><span>@T("Plugin.Misc.InfiniteScroll.PageTitle")</span></h1>
+    </header>
+    <div class="page-body">
+        <section class="product-grid" data-ajaxfilter="products">
+            <ul class="item-grid row"></ul>
+            <div class="pagination">
+                <a class="pagination__next" href="/InfiniteScroll/LoadProducts?page=1"></a>
+            </div>
+        </section>
+        <!-- status elements -->
+        <div class="scroller-status">
+            <div class="infinite-scroll-request loader-ellips text-center">
+                @*<img src="/Themes/Bootstrap4/Content/images/loading-large.gif" />*@
+                <img src="/css/admin/images/ajax-loading.gif" />
+            </div>
+            <p class="infinite-scroll-last" style="display:none;">@T("Plugin.Misc.InfiniteScroll.ContentEnd")</p>
+            <p class="infinite-scroll-error" style="display:none;">@T("Plugin.Misc.InfiniteScroll.ContentError")</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('.item-grid').infiniteScroll({
+        // options
+        path: '.pagination__next',
+        append: '.item-box',
+        status: '.scroller-status',
+        hideNav: '.pagination',
+        history: false,
+        prefill: true,
+        scrollThreshold: 300,
+    });
+</script>
+
+@*<script>
+        var pageIndex = 1;
+        var pageCount = @Model.PageCount;
+
+        $(window).scroll(function () {
+            if ($(window).scrollTop() >= $(document).height() - $(window).height()) {
+        //    //if ($(window).scrollTop() + $(window).height() > $(document).height() - 500) {
+        //    //if ($(window).scrollTop() == $(document).height() - $(window).height() - 100) {
+                GetRecords();
+            }
+        });
+
+
+        function GetRecords() {
+            pageIndex++;
+            if (pageIndex == 2 || pageIndex <= pageCount) {
+                $("#loader").show();
+                $.ajax({
+                    type: "GET",
+                    url: "/InfiniteScroll/LoadProducts?pageIndex="+pageIndex,
+                    success: OnSuccess,
+                    failure: function (response) {
+                        alert(response.d);
+                    },
+                    error: function (response) {
+                        alert(response.d);
+                    }
+                });
+            }
+        }
+
+        function OnSuccess(response) {
+
+            $(".item-grid").append(response);
+            //var xmlDoc = $.parseXML(response.d);
+            //var xml = $(xmlDoc);
+            //pageCount = parseInt(xml.find("PageCount").eq(0).find("PageCount").text());
+            //pageCount = 10;
+
+            $("#loader").hide();
+        }
+    </script>*@

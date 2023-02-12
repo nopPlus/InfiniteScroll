@@ -1,0 +1,56 @@
+﻿@model Plugin.Misc.InfiniteScroll.Models.ConfigurationModel
+@using Arsina.WebShop.Web.Framework;
+@using Arsina.WebShop.Web.Framework.UI;
+
+@{
+    Layout = "_AdminLayout";
+    //page title
+    //ViewBag.Title = @T("Plugin.Misc.RayganPrint.Configuration");
+    //active menu item (system name)
+    //Html.SetActiveMenuItemSystemName("PluginPolishi-Settings");
+}
+@await Component.InvokeAsync("StoreScopeConfiguration")
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="content">
+        <div class="form-horizontal">
+            <div class="panel-group">
+                <div class="card">
+                    <div class="card-header">
+                        تنظیمات
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <div class="col-md-3">
+                                @Html.FgLabelFor(model => model.PageSize)
+                            </div>
+                            <div class="col-md-3">
+                                @Html.FgEditorFor(model => model.PageSize, "عدد")
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-3">
+                                @Html.FgLabelFor(model => model.WidgetZone)
+                            </div>
+                            <div class="col-md-3">
+                                @Html.FgEditorFor(model => model.WidgetZone)
+                                <span>پیش فرض: header_menu_after</span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-3 offset-md-3">
+                                <button type="submit" name="save" class="btn btn-primary">
+                                    <i class="fas fa-save"></i>
+                                    @T("Admin.Common.Save")
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
