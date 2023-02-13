@@ -16,7 +16,7 @@
 
 <div class="page category-page">
     <header>
-        <h1 class="page-title"><span>@T("Plugin.Misc.InfiniteScroll.PageTitle")</span></h1>
+        <h1 class="page-title"><span>@T("NopPlus.Plugin.InfiniteScroll.PageTitle")</span></h1>
     </header>
     <div class="page-body">
         <section class="product-grid" data-ajaxfilter="products">
@@ -25,11 +25,11 @@
                 <a class="pagination__next" href="/InfiniteScroll/LoadProducts?page=1"></a>
             </div>
         </section>
+
         <!-- status elements -->
         <div class="scroller-status">
-            <div class="infinite-scroll-request loader-ellips text-center">
-                @*<img src="/Themes/Bootstrap4/Content/images/loading-large.gif" />*@
-                <img src="/css/admin/images/ajax-loading.gif" />
+            <div class="infinite-scroll-request loader-ellips">
+                <img src="/Plugins/NopPlus.InfiniteScroll/Content/loading.gif" alt="loading..." width="50" height="50" />
             </div>
             <p class="infinite-scroll-last" style="display:none;">@T("NopPlus.Plugin.InfiniteScroll.ContentEnd")</p>
             <p class="infinite-scroll-error" style="display:none;">@T("NopPlus.Plugin.InfiniteScroll.ContentError")</p>
