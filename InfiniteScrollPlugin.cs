@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Nop.Core;
+using Nop.Core.Domain.Cms;
 using Nop.Services.Cms;
 using Nop.Services.Configuration;
 using Nop.Services.Localization;
@@ -15,19 +16,22 @@ namespace NopPlus.Plugin.InfiniteScroll
     public class InfiniteScrollPlugin : BasePlugin, IWidgetPlugin
     {
         private readonly ISettingService _settingService;
-        private readonly InfiniteScrollSettings _pluginSettings;
         private readonly IWebHelper _webHelper;
         private readonly ILocalizationService _localizationService;
+        private readonly WidgetSettings _widgetSettings;
+        private readonly InfiniteScrollSettings _pluginSettings;
 
         public InfiniteScrollPlugin(ISettingService settingService,
-            InfiniteScrollSettings pluginSettings,
             IWebHelper webHelper,
-            ILocalizationService localizationService)
+            ILocalizationService localizationService,
+            WidgetSettings widgetSettings,
+            InfiniteScrollSettings pluginSettings)
         {
             _settingService = settingService;
-            _pluginSettings = pluginSettings;
             _webHelper = webHelper;
             _localizationService = localizationService;
+            _widgetSettings = widgetSettings;
+            _pluginSettings = pluginSettings;
         }
 
         /// <summary>
@@ -39,7 +43,11 @@ namespace NopPlus.Plugin.InfiniteScroll
         /// </returns>
         public Task<IList<string>> GetWidgetZonesAsync()
         {
-            return Task.FromResult<IList<string>>(new List<string> { PublicWidgetZones.HeaderAfter });
+            var widgetZones = new List<string> { };
+            if (_pluginSettings.TopMenuLink)
+                widgetZones.Add(PublicWidgetZones.Footer);
+
+            return Task.FromResult<IList<string>>(widgetZones);
         }
 
         /// <summary>
@@ -69,12 +77,19 @@ namespace NopPlus.Plugin.InfiniteScroll
             //settings
             var settings = new InfiniteScrollSettings()
             {
-                PageSize = 24,
-                WidgetZone = "header_menu_after"
+                PageSize = 12,
+                TopMenuLink = true
             };
-
             await _settingService.SaveSettingAsync(settings);
 
+            //enable widget
+            if (!_widgetSettings.ActiveWidgetSystemNames.Contains(PluginDefaults.SystemName))
+            {
+                _widgetSettings.ActiveWidgetSystemNames.Add(PluginDefaults.SystemName);
+                await _settingService.SaveSettingAsync(_widgetSettings);
+            }
+
+            //locales
             await _localizationService.AddOrUpdateLocaleResourceAsync(new Dictionary<string, string>
             {
                 ["NopPlus.Plugin.InfiniteScroll.PageTitle"] = "All Products",
@@ -84,8 +99,8 @@ namespace NopPlus.Plugin.InfiniteScroll
 
                 ["NopPlus.Plugin.InfiniteScroll.Fields.PageSize"] = "Lazy Loading Page Size",
                 ["NopPlus.Plugin.InfiniteScroll.Fields.PageSize.Hint"] = "Number of products load on each request.",
-                ["NopPlus.Plugin.InfiniteScroll.Fields.WidgetZone"] = "The start of the showing special effect.",
-                ["NopPlus.Plugin.InfiniteScroll.Fields.WidgetZone.Hint"] = "Widget zone to show infinit scroll page link.",
+                ["NopPlus.Plugin.InfiniteScroll.Fields.TopMenuLink"] = "Show in Top Menu",
+                ["NopPlus.Plugin.InfiniteScroll.Fields.TopMenuLink.Hint"] = "Infinite scroll page link display on top menu if enabled.",
             });
 
             await base.InstallAsync();
@@ -99,6 +114,13 @@ namespace NopPlus.Plugin.InfiniteScroll
         {
             //settings
             await _settingService.DeleteSettingAsync<InfiniteScrollSettings>();
+
+            //disable widget
+            if (_widgetSettings.ActiveWidgetSystemNames.Contains(PluginDefaults.SystemName))
+            {
+                _widgetSettings.ActiveWidgetSystemNames.Remove(PluginDefaults.SystemName);
+                await _settingService.SaveSettingAsync(_widgetSettings);
+            }
 
             //locales
             await _localizationService.DeleteLocaleResourcesAsync("NopPlus.Plugin.InfiniteScroll");
