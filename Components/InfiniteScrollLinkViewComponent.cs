@@ -13,15 +13,18 @@ namespace NopPlus.Plugin.InfiniteScroll.Components
 
         private readonly IStoreContext _storeContext;
         private readonly IStaticCacheManager _staticCacheManager;
+        private readonly InfiniteScrollSettings _pluginSettings;
         #endregion
 
         #region Ctor
 
         public InfiniteScrollLinkViewComponent(IStoreContext storeContext,
-            IStaticCacheManager staticCacheManager)
+            IStaticCacheManager staticCacheManager,
+            InfiniteScrollSettings pluginSettings)
         {
             _storeContext = storeContext;
             _staticCacheManager = staticCacheManager;
+            _pluginSettings = pluginSettings;
         }
         #endregion
 
@@ -30,6 +33,9 @@ namespace NopPlus.Plugin.InfiniteScroll.Components
         /// <returns>A task that represents the asynchronous operation</returns>
         public async Task<IViewComponentResult> InvokeAsync(string widgetZone, object additionalData)
         {
+            if (!_pluginSettings.TopMenuLink)
+                return Content(string.Empty);
+
             return View();
         }
 

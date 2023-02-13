@@ -6,7 +6,7 @@ namespace NopPlus.Plugin.InfiniteScroll
     {
         public int PageSize { get; set; }
 
-        public string WidgetZone { get; set; }
+        public bool TopMenuLink { get; set; }
 
     }
 }

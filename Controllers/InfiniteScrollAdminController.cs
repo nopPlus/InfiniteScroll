@@ -53,14 +53,14 @@ namespace NopPlus.Plugin.InfiniteScroll.Controllers
             var model = new ConfigurationModel()
             {
                 PageSize = infiniteScrollSettings.PageSize,
-                WidgetZone = infiniteScrollSettings.WidgetZone,
+                TopMenuLink = infiniteScrollSettings.TopMenuLink,
                 ActiveStoreScopeConfiguration = storeScope
             };
 
             if (storeScope > 0)
             {
                 model.PageSize_OverrideForStore = await _settingService.SettingExistsAsync(infiniteScrollSettings, x => x.PageSize, storeScope);
-                model.WidgetZone_OverrideForStore = await _settingService.SettingExistsAsync(infiniteScrollSettings, x => x.WidgetZone, storeScope);
+                model.TopMenuLink_OverrideForStore = await _settingService.SettingExistsAsync(infiniteScrollSettings, x => x.TopMenuLink, storeScope);
             }
 
             return View("~/Plugins/NopPlus.InfiniteScroll/Views/Configure.cshtml", model);
@@ -78,13 +78,13 @@ namespace NopPlus.Plugin.InfiniteScroll.Controllers
 
             //save settings
             infiniteScrollSettings.PageSize = model.PageSize;
-            infiniteScrollSettings.WidgetZone = model.WidgetZone;
+            infiniteScrollSettings.TopMenuLink = model.TopMenuLink;
 
             /* We do not clear cache after each setting update.
              * This behavior can increase performance because cached settings will not be cleared 
              * and loaded from database after each update */
             await _settingService.SaveSettingOverridablePerStoreAsync(infiniteScrollSettings, x => x.PageSize, model.PageSize_OverrideForStore, storeScope, false);
-            await _settingService.SaveSettingOverridablePerStoreAsync(infiniteScrollSettings, x => x.WidgetZone, model.WidgetZone_OverrideForStore, storeScope, false);
+            await _settingService.SaveSettingOverridablePerStoreAsync(infiniteScrollSettings, x => x.TopMenuLink, model.TopMenuLink_OverrideForStore, storeScope, false);
 
             //now clear settings cache
             await _settingService.ClearCacheAsync();

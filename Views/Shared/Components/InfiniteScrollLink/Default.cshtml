@@ -1,6 +1,14 @@
 ﻿@using NopPlus.Plugin.InfiniteScroll;
-<li class="nav-item">
-    <a href="@Url.RouteUrl(PluginDefaults.InfiniteScrollPageRoute)" class="nav-link">
-        <i class="fal fa-star" style="color:hotpink;"></i>@T("NopPlus.Plugin.InfiniteScroll.LinkTitle")
+
+<li class="infinitscroll-link">
+    <a href="@Url.RouteUrl(PluginDefaults.InfiniteScrollPageRoute)">
+        @T("NopPlus.Plugin.InfiniteScroll.LinkTitle")
     </a>
 </li>
+
+<script asp-location="Footer">
+    $(document).ready(function () {
+        $(".header-menu .notmobile").append($(".infinitscroll-link"))
+        $(".header-menu .mobile").append($('.infinitscroll-link').clone());
+    });
+</script>
