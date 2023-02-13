@@ -6,7 +6,7 @@ using Nop.Web.Framework.Components;
 
 namespace NopPlus.Plugin.InfiniteScroll.Components
 {
-    [ViewComponent(Name = "InfiniteScrollLink")]
+    [ViewComponent(Name = PluginDefaults.INFINITESCROLL_LINK_VIEW_COMPONENT_NAME)]
     public class InfiniteScrollLinkViewComponent : NopViewComponent
     {
         #region Fields
@@ -30,7 +30,7 @@ namespace NopPlus.Plugin.InfiniteScroll.Components
         /// <returns>A task that represents the asynchronous operation</returns>
         public async Task<IViewComponentResult> InvokeAsync(string widgetZone, object additionalData)
         {
-            return Content("");
+            return View();
         }
 
         #endregion

@@ -33,7 +33,7 @@ namespace NopPlus.Plugin.InfiniteScroll
         /// <summary>
         /// Name of the view component to display widget in public store
         /// </summary>
-        //public const string ADMIN_RELATEDPRODUCT_VIEW_COMPONENT_NAME = "AdminSmartRelatedProducts";
+        public const string INFINITESCROLL_LINK_VIEW_COMPONENT_NAME = "InfiniteScrollLink";
 
         /// <summary>
         /// Name of the view component to display widget in public store

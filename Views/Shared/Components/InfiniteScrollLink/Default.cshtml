@@ -1,3 +1,6 @@
-﻿<li class="nav-item">
-    <a href="@Url.RouteUrl("Plugin.Misc.InfiniteScroll.AllProducts")" class="nav-link"><i class="fal fa-star" style="color:hotpink;"></i>@T("Plugin.Misc.InfiniteScroll.LinkTitle")</a>
+﻿@using NopPlus.Plugin.InfiniteScroll;
+<li class="nav-item">
+    <a href="@Url.RouteUrl(PluginDefaults.InfiniteScrollPageRoute)" class="nav-link">
+        <i class="fal fa-star" style="color:hotpink;"></i>@T("NopPlus.Plugin.InfiniteScroll.LinkTitle")
+    </a>
 </li>

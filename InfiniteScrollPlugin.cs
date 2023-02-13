@@ -5,6 +5,7 @@ using Nop.Services.Cms;
 using Nop.Services.Configuration;
 using Nop.Services.Localization;
 using Nop.Services.Plugins;
+using Nop.Web.Framework.Infrastructure;
 
 namespace NopPlus.Plugin.InfiniteScroll
 {
@@ -38,7 +39,7 @@ namespace NopPlus.Plugin.InfiniteScroll
         /// </returns>
         public Task<IList<string>> GetWidgetZonesAsync()
         {
-            return Task.FromResult<IList<string>>(new List<string> { _pluginSettings.WidgetZone });
+            return Task.FromResult<IList<string>>(new List<string> { PublicWidgetZones.HeaderAfter });
         }
 
         /// <summary>
@@ -56,7 +57,7 @@ namespace NopPlus.Plugin.InfiniteScroll
         /// <returns>View component name</returns>
         public string GetWidgetViewComponentName(string widgetZone)
         {
-            return "InfiniteScrollLink";
+            return PluginDefaults.INFINITESCROLL_LINK_VIEW_COMPONENT_NAME;
         }
 
         /// <summary>
