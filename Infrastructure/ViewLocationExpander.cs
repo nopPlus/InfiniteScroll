@@ -10,7 +10,8 @@ namespace NopPlus.Plugin.InfiniteScroll.Infrastructure
         public IEnumerable<string> ExpandViewLocations(ViewLocationExpanderContext context, IEnumerable<string> viewLocations)
         {
             viewLocations = new[] {
-                "/Plugins/NopPlus.InfiniteScroll/Views/Shared/{0}.cshtml"
+                "/Plugins/NopPlus.InfiniteScroll/Views/Shared/{0}.cshtml",
+                "/Plugins/NopPlus.InfiniteScroll/Views/InfiniteScroll/{0}.cshtml",
             }.Concat(viewLocations);
             return viewLocations;
         }

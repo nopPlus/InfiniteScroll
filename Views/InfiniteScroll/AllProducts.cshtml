@@ -1,17 +1,17 @@
-﻿
-@using Arsina.WebShop.Web.Framework.UI
+﻿@using Nop.Web.Framework.UI
 @{
     Layout = "~/Views/Shared/_ColumnsOne.cshtml";
     //title
-    Html.AddTitleParts(T("Plugin.Misc.InfiniteScroll.PageTitle").Text);
+    NopHtml.AddTitleParts(T("NopPlus.Plugin.InfiniteScroll.PageTitle").Text);
     //meta
     //Html.AddMetaDescriptionParts(Model.MetaDescription);
     //Html.AddMetaKeywordParts(Model.MetaKeywords);
     //page class
-    Html.AppendPageCssClassParts("html-category-page");
+    NopHtml.AppendPageCssClassParts("html-category-page");
 
-    Html.AddCssFileParts("~/Plugins/Misc.InfiniteScroll/Content/infinitescroll.min.css");
-    Html.AddScriptParts("~/Plugins/Misc.InfiniteScroll/Content/infinite-scroll.pkgd.min.js");
+    NopHtml.AddCssFileParts("~/Plugins/NopPlus.InfiniteScroll/Content/infinitescroll.min.css");
+
+    NopHtml.AppendScriptParts(ResourceLocation.Footer, "~/Plugins/NopPlus.InfiniteScroll/Content/infinite-scroll.pkgd.min.js", excludeFromBundle: true);
 }
 
 <div class="page category-page">
@@ -31,8 +31,8 @@
                 @*<img src="/Themes/Bootstrap4/Content/images/loading-large.gif" />*@
                 <img src="/css/admin/images/ajax-loading.gif" />
             </div>
-            <p class="infinite-scroll-last" style="display:none;">@T("Plugin.Misc.InfiniteScroll.ContentEnd")</p>
-            <p class="infinite-scroll-error" style="display:none;">@T("Plugin.Misc.InfiniteScroll.ContentError")</p>
+            <p class="infinite-scroll-last" style="display:none;">@T("NopPlus.Plugin.InfiniteScroll.ContentEnd")</p>
+            <p class="infinite-scroll-error" style="display:none;">@T("NopPlus.Plugin.InfiniteScroll.ContentError")</p>
         </div>
     </div>
 </div>
