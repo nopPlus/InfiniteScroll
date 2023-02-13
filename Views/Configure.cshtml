@@ -1,56 +1,49 @@
-﻿@model Plugin.Misc.InfiniteScroll.Models.ConfigurationModel
-@using Arsina.WebShop.Web.Framework;
-@using Arsina.WebShop.Web.Framework.UI;
+﻿@model NopPlus.Plugin.InfiniteScroll.Models.ConfigurationModel
 
 @{
-    Layout = "_AdminLayout";
-    //page title
-    //ViewBag.Title = @T("Plugin.Misc.RayganPrint.Configuration");
-    //active menu item (system name)
-    //Html.SetActiveMenuItemSystemName("PluginPolishi-Settings");
+    Layout = "_ConfigurePlugin";
 }
-@await Component.InvokeAsync("StoreScopeConfiguration")
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
 
-    <div class="content">
-        <div class="form-horizontal">
-            <div class="panel-group">
-                <div class="card">
-                    <div class="card-header">
-                        تنظیمات
-                    </div>
+@await Component.InvokeAsync("StoreScopeConfiguration")
+<form asp-controller="InfiniteScrollAdmin" asp-action="Configure" method="post">
+    <section class="content">
+        <div class="container-fluid">
+            <div class="cards-group">
+
+                <div class="card card-default">
                     <div class="card-body">
                         <div class="form-group row">
                             <div class="col-md-3">
-                                @Html.FgLabelFor(model => model.PageSize)
+                                <nop-override-store-checkbox asp-for="PageSize_OverrideForStore" asp-input="PageSize" asp-store-scope="@Model.ActiveStoreScopeConfiguration" />
+                                <nop-label asp-for="PageSize" />
                             </div>
-                            <div class="col-md-3">
-                                @Html.FgEditorFor(model => model.PageSize, "عدد")
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-md-3">
-                                @Html.FgLabelFor(model => model.WidgetZone)
-                            </div>
-                            <div class="col-md-3">
-                                @Html.FgEditorFor(model => model.WidgetZone)
-                                <span>پیش فرض: header_menu_after</span>
+                            <div class="col-md-9">
+                                <nop-editor asp-for="PageSize" />
+                                <span asp-validation-for="PageSize"></span>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <div class="col-md-3 offset-md-3">
-                                <button type="submit" name="save" class="btn btn-primary">
-                                    <i class="fas fa-save"></i>
-                                    @T("Admin.Common.Save")
-                                </button>
+                            <div class="col-md-3">
+                                <nop-override-store-checkbox asp-for="WidgetZone_OverrideForStore" asp-input="WidgetZone" asp-store-scope="@Model.ActiveStoreScopeConfiguration" />
+                                <nop-label asp-for="WidgetZone" />
+                            </div>
+                            <div class="col-md-9">
+                                <nop-editor asp-for="WidgetZone" />
+                                <span asp-validation-for="WidgetZone"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card card-default">
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <div class="col-md-9 offset-md-3">
+                                <button type="submit" name="save" class="btn btn-primary">@T("Admin.Common.Save")</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-
-}
+    </section>
+</form>

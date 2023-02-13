@@ -53,7 +53,8 @@ namespace NopPlus.Plugin.InfiniteScroll.Controllers
             var model = new ConfigurationModel()
             {
                 PageSize = infiniteScrollSettings.PageSize,
-                WidgetZone = infiniteScrollSettings.WidgetZone
+                WidgetZone = infiniteScrollSettings.WidgetZone,
+                ActiveStoreScopeConfiguration = storeScope
             };
 
             if (storeScope > 0)
@@ -62,7 +63,7 @@ namespace NopPlus.Plugin.InfiniteScroll.Controllers
                 model.WidgetZone_OverrideForStore = await _settingService.SettingExistsAsync(infiniteScrollSettings, x => x.WidgetZone, storeScope);
             }
 
-            return View("~/Plugins/Misc.InfiniteScroll/Views/Admin/Configure.cshtml", model);
+            return View("~/Plugins/NopPlus.InfiniteScroll/Views/Configure.cshtml", model);
         }
 
         [HttpPost]
