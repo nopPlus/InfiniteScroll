@@ -3,7 +3,7 @@
   "FriendlyName": "Infinite Scroll",
   "SystemName": "NopPlus.InfiniteScroll",
   "Version": 1.00,
-  "SupportedVersions": [ "4.50" ],
+  "SupportedVersions": [ "4.60" ],
   "Author": "nopPlus",
   "DisplayOrder": 1,
   "FileName": "NopPlus.Plugin.InfiniteScroll.dll",

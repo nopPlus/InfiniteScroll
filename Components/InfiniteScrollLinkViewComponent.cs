@@ -6,7 +6,6 @@ using Nop.Web.Framework.Components;
 
 namespace NopPlus.Plugin.InfiniteScroll.Components
 {
-    [ViewComponent(Name = PluginDefaults.INFINITESCROLL_LINK_VIEW_COMPONENT_NAME)]
     public class InfiniteScrollLinkViewComponent : NopViewComponent
     {
         #region Fields
