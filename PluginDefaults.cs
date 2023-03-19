@@ -13,13 +13,6 @@ namespace NopPlus.Plugin.InfiniteScroll
         /// </summary>
         public static string SystemName => "NopPlus.InfiniteScroll";
 
-        /// <summary>
-        /// Name of the view component to display widget in public store
-        /// </summary>
-        public const string INFINITESCROLL_LINK_VIEW_COMPONENT_NAME = "InfiniteScrollLink";
-        public const string INFINITESCROLL_CATEGORY_COMPONENT_NAME = "InfiniteScrollCategory";
-
-        /// <summary>
         /// Gets a name of the route to the import contacts callback
         /// </summary>
         public static string InfiniteScrollPageRoute => "NopPlus.Plugin.InfiniteScroll.AllProducts";
