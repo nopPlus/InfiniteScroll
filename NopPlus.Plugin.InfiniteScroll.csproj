@@ -73,6 +73,9 @@
     <None Update="Views\InfiniteScroll\InfiniteProductGrid.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Views\Shared\Components\InfiniteScrollCategory\Default.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Views\Shared\Components\InfiniteScrollLink\Default.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

@@ -2,7 +2,7 @@
   "Group": "Widgets",
   "FriendlyName": "Infinite Scroll",
   "SystemName": "NopPlus.InfiniteScroll",
-  "Version": 1.00,
+  "Version": 2.00,
   "SupportedVersions": [ "4.50" ],
   "Author": "nopPlus",
   "DisplayOrder": 1,
