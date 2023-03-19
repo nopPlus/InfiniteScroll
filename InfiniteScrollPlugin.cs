@@ -45,7 +45,7 @@ namespace NopPlus.Plugin.InfiniteScroll
         /// </returns>
         public Task<IList<string>> GetWidgetZonesAsync()
         {
-            var widgetZones = new List<string> { };
+            var widgetZones = new List<string> { PublicWidgetZones.CategoryDetailsBottom };
             if (_pluginSettings.TopMenuLink)
                 widgetZones.Add(PublicWidgetZones.Footer);
 
@@ -67,6 +67,9 @@ namespace NopPlus.Plugin.InfiniteScroll
         /// <returns>View component type</returns>
         public Type GetWidgetViewComponent(string widgetZone)
         {
+            if (string.Equals(widgetZone, PublicWidgetZones.CategoryDetailsBottom))
+                return typeof(InfiniteScrollCategoryViewComponent);
+                
             return typeof(InfiniteScrollLinkViewComponent);
         }
 

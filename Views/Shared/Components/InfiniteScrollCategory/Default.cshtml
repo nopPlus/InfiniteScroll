@@ -1,0 +1,63 @@
+﻿@model Nop.Web.Models.Catalog.CategoryModel
+@{
+    NopHtml.AddCssFileParts("~/Plugins/NopPlus.InfiniteScroll/Content/infinitescroll.min.css");
+    NopHtml.AppendScriptParts(ResourceLocation.Footer, "~/Plugins/NopPlus.InfiniteScroll/Content/infinite-scroll.pkgd.min.js", excludeFromBundle: true);
+}
+<script asp-location="Footer">
+    function initialInfinitScroll() {
+        let infinit = $(".products-container .infinite-scroll");
+        let pager = $(".products-container .pager");
+        if (pager.length > 0) {
+            pager.remove();
+            if (infinit.length === 0) {
+                $(".products-container .product-grid").append(
+                    '<div class="infinite-scroll">'+
+                        '<div class="pagination"><a class="pagination__next"></a></div>'+
+                        '<div class="scroller-status">'+
+                            '<div class="infinite-scroll-request loader-ellips">'+
+                                '<img src="/Plugins/NopPlus.InfiniteScroll/Content/loading.gif" alt="loading..." width="50" height="50" />'+
+                            '</div>'+
+                            '<p class="infinite-scroll-last" style="display:none;">@T("NopPlus.Plugin.InfiniteScroll.ContentEnd")</p>'+
+                            '<p class="infinite-scroll-error" style="display:none;">@T("NopPlus.Plugin.InfiniteScroll.ContentError")</p>'+
+                        '</div>'+
+                    '</div>');
+            }
+        }
+        else {
+            if (infinit.length > 0) {
+                infinit.remove();
+            }
+        }
+
+        $('.item-grid').infiniteScroll({
+            // options
+            path: function () {
+                //console.log(this.loadCount + 2);
+                let pageNumber = (this.loadCount + 2);
+                return `/InfiniteScroll/AjaxLoad?categoryId=@Model.Id&page=${pageNumber}&` + window.location.search;
+            },
+            append: '.item-box',
+            status: '.scroller-status',
+            hideNav: '.pagination',
+            history: false,
+            prefill: true,
+            scrollThreshold: 300,
+        });
+    }
+
+    $(document).ajaxComplete(function (event, xhr, settings) {
+        if (settings.url.includes("category/products")) {
+            initialInfinitScroll();
+            window.scroll({
+                top: 0,
+                left: 0,
+                behavior: 'smooth'
+            });
+        }
+    });
+
+    $(document).ready(function () {
+        initialInfinitScroll();
+    });
+
+</script>
