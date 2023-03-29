@@ -3,7 +3,9 @@
     NopHtml.AddCssFileParts("~/Plugins/NopPlus.InfiniteScroll/Content/infinitescroll.min.css");
     NopHtml.AppendScriptParts(ResourceLocation.Footer, "~/Plugins/NopPlus.InfiniteScroll/Content/infinite-scroll.pkgd.min.js", excludeFromBundle: true);
 }
+
 <script asp-location="Footer">
+
     function initialInfinitScroll() {
         let infinit = $(".products-container .infinite-scroll");
         let pager = $(".products-container .pager");
@@ -43,16 +45,17 @@
             prefill: true,
             scrollThreshold: 300,
         });
+         window.scroll({
+                top: 0,
+                left: 0,
+                behavior: 'smooth'
+            });
     }
 
     $(document).ajaxComplete(function (event, xhr, settings) {
         if (settings.url.includes("category/products")) {
             initialInfinitScroll();
-            window.scroll({
-                top: 0,
-                left: 0,
-                behavior: 'smooth'
-            });
+           
         }
     });
 
