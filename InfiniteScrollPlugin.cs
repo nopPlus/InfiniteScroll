@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Nop.Core;
 using Nop.Core.Domain.Cms;
@@ -8,7 +7,6 @@ using Nop.Services.Configuration;
 using Nop.Services.Localization;
 using Nop.Services.Plugins;
 using Nop.Web.Framework.Infrastructure;
-using NopPlus.Plugin.InfiniteScroll.Components;
 
 namespace NopPlus.Plugin.InfiniteScroll
 {
@@ -61,16 +59,16 @@ namespace NopPlus.Plugin.InfiniteScroll
         }
 
         /// <summary>
-        /// Gets a type of a view component for displaying widget
+        /// Gets a name of a view component for displaying widget
         /// </summary>
         /// <param name="widgetZone">Name of the widget zone</param>
-        /// <returns>View component type</returns>
-        public Type GetWidgetViewComponent(string widgetZone)
+        /// <returns>View component name</returns>
+        public string GetWidgetViewComponentName(string widgetZone)
         {
             if (string.Equals(widgetZone, PublicWidgetZones.CategoryDetailsBottom))
-                return typeof(InfiniteScrollCategoryViewComponent);
-                
-            return typeof(InfiniteScrollLinkViewComponent);
+                return PluginDefaults.INFINITESCROLL_CATEGORY_VIEW_COMPONENT_NAME;
+
+            return PluginDefaults.INFINITESCROLL_LINK_VIEW_COMPONENT_NAME;
         }
 
         /// <summary>
