@@ -7,7 +7,6 @@ using Nop.Web.Models.Catalog;
 
 namespace NopPlus.Plugin.InfiniteScroll.Components
 {
-    [ViewComponent(Name = PluginDefaults.INFINITESCROLL_CATEGORY_COMPONENT_NAME)]
     public class InfiniteScrollCategoryViewComponent : NopViewComponent
     {
         #region Fields
