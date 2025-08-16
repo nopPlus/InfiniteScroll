@@ -31,12 +31,12 @@
             }
         }
 
-        $('.item-grid').infiniteScroll({
+        $('.products-wrapper .item-grid').infiniteScroll({
             // options
             path: function () {
                 //console.log(this.loadCount + 2);
                 let pageNumber = (this.loadCount + 2);
-                return `/InfiniteScroll/AjaxLoad?categoryId=@Model.Id&page=${pageNumber}&` + window.location.search;
+                return `/InfiniteScroll/AjaxLoad?categoryId=@Model.Id&page=${pageNumber}&` + window.location.search.replace("?", "");
             },
             append: '.item-box',
             status: '.scroller-status',

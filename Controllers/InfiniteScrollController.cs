@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using MailKit.Search;
 using Microsoft.AspNetCore.Mvc;
 using Nop.Core;
 using Nop.Core.Domain.Catalog;
@@ -56,7 +55,7 @@ namespace NopPlus.Plugin.InfiniteScroll.Controllers
         /// A task that represents the asynchronous operation
         /// The task result contains the <see cref="Task"/> containing the price range converted to primary store currency
         /// </returns>
-        protected virtual async Task<(decimal? from,decimal? to)> GetConvertedPriceRangeAsync(string price)
+        protected virtual async Task<(decimal? from, decimal? to)> GetConvertedPriceRangeAsync(string price)
         {
             //var result = new PriceRangeModel();
             decimal? priceFrom = null;
@@ -98,13 +97,25 @@ namespace NopPlus.Plugin.InfiniteScroll.Controllers
             return View();
         }
 
+
         public virtual async Task<IActionResult> LoadProducts(int categoryId = 0, int orderBy = 15, int pageSize = 0, int page = 1)
         {
             ViewBag.PageSize = pageSize;
             ViewBag.OrderBy = orderBy;
 
+            if (categoryId > 0)
+            {
+                var category = await _categoryService.GetCategoryByIdAsync(categoryId);
+                if (pageSize <= 0)
+                {
+                    //page size
+                    pageSize = PreparePageSizeOptions(category.AllowCustomersToSelectPageSize, category.PageSizeOptions, category.PageSize);
+                }
+            }
+
             if (pageSize == 0)
                 pageSize = _pluginSettings.PageSize;
+
 
             var productSortingEnum = (ProductSortingEnum)orderBy;
 
@@ -145,7 +156,7 @@ namespace NopPlus.Plugin.InfiniteScroll.Controllers
             int? page = null,
             string specs = "",
             string ms = "",
-            string price ="")
+            string price = "")
         {
             var category = await _categoryService.GetCategoryByIdAsync(categoryId);
             if (category == null || category.Deleted)
@@ -259,6 +270,58 @@ namespace NopPlus.Plugin.InfiniteScroll.Controllers
 
             return View("InfiniteProductGrid", model);
 
+        }
+
+        /// <summary>
+        /// Prepare page size options
+        /// </summary>
+        /// <param name="allowCustomersToSelectPageSize">Are customers allowed to select page size?</param>
+        /// <param name="pageSizeOptions">Page size options</param>
+        /// <param name="fixedPageSize">Fixed page size</param>
+        /// <returns>A task that represents the asynchronous operation</returns>
+        private int PreparePageSizeOptions(bool allowCustomersToSelectPageSize, string pageSizeOptions, int fixedPageSize)
+        {
+            var pageSize = 0;
+            if (allowCustomersToSelectPageSize && pageSizeOptions != null)
+            {
+                var pageSizes = pageSizeOptions.Split(new[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+                if (pageSizes.Any())
+                {
+                    var pageSizeOptionsValues = new List<string>();
+                    foreach (var pageSizeStr in pageSizes)
+                    {
+                        if (!int.TryParse(pageSizeStr, out var temp))
+                            continue;
+
+                        if (temp <= 0)
+                            continue;
+
+                        pageSizeOptionsValues.Add(pageSizeStr);
+                    }
+
+                    if (pageSizeOptionsValues.Any())
+                    {
+                        pageSizeOptionsValues = pageSizeOptionsValues.OrderBy(x => int.Parse(x)).ToList();
+
+                        if (pageSize <= 0)
+                            pageSize = int.Parse(pageSizeOptionsValues.First());
+                    }
+                }
+            }
+            else
+            {
+                //customer is not allowed to select a page size
+                pageSize = fixedPageSize;
+            }
+
+            //ensure pge size is specified
+            if (pageSize <= 0)
+            {
+                pageSize = fixedPageSize;
+            }
+
+            return pageSize;
         }
     }
 }
