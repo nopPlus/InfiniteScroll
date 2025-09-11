@@ -18,7 +18,7 @@ namespace NopPlus.Plugin.InfiniteScroll.Infrastructure
 
         public void PopulateValues(ViewLocationExpanderContext context)
         {
-            if (context.AreaName == AreaNames.Admin)
+            if (context.AreaName == AreaNames.ADMIN)
                 return;
         }
     }
